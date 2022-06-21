@@ -1,6 +1,9 @@
 package number
 
-import "math/rand"
+import (
+	"math/rand"
+	"time"
+)
 
 type NumberType string
 
@@ -9,13 +12,15 @@ const (
 	EVEN            = "EVEN"
 )
 
-type generator struct{}
+type Generator struct{}
 
-func (g generator) randomOddOrEven(nt NumberType) int {
+func (g *Generator) RandomNumber(nt NumberType) int {
 	odds := []int{1, 3, 5, 7, 9}
 	evens := []int{2, 4, 6, 8, 10}
 
-	random := rand.Intn(4)
+	s := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(s)
+	random := r.Intn(4)
 
 	if nt == ODD {
 		return odds[random]
